@@ -425,6 +425,8 @@ main {
   box-shadow: var(--shadow);
   max-width: 500px;
   margin: 0 auto;
+
+  border: solid 1px var(--accent-color);
 }
 .booking-form h3 {
   font-size: 1.8rem;
@@ -770,7 +772,7 @@ main {
     padding: 0 1rem;
   }
   .booking-form {
-    margin: 0 1rem;
+    /* margin: 0 1rem; */
     padding: 1.5rem;
   }
   .calendar-section {
