@@ -1,0 +1,416 @@
+import { useEffect, useMemo, useState } from "react";
+import { GOOGLE_CALENDAR_CONFIG, DateUtils } from "../config/calendarConfig";
+import { googleCalendarService } from "../services/googleCalendarService";
+
+const timeSlots = [
+  "09:00",
+  "09:30",
+  "10:00",
+  "10:30",
+  "11:00",
+  "11:30",
+  "12:00",
+  "12:30",
+  "13:00",
+  "13:30",
+  "14:00",
+  "14:30",
+  "15:00",
+  "15:30",
+  "16:00",
+  "16:30",
+  "17:00",
+  "17:30",
+];
+
+export default function Schedule() {
+  const [service, setService] = useState("");
+  const [barber, setBarber] = useState("any");
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [showCustomer, setShowCustomer] = useState(false);
+  const [slots, setSlots] = useState([]);
+  const [loadingSlots, setLoadingSlots] = useState(false);
+
+  useEffect(() => {
+    setShowCustomer(Boolean(date && time));
+  }, [date, time]);
+
+  const [calendarYear, setCalendarYear] = useState(new Date().getFullYear());
+  const [calendarMonth, setCalendarMonth] = useState(new Date().getMonth());
+
+  const computedTitle = useMemo(() => {
+    const d = new Date(calendarYear, calendarMonth, 1);
+    return d.toLocaleDateString("pt-PT", { month: "long", year: "numeric" });
+  }, [calendarYear, calendarMonth]);
+
+  async function refreshSlots(selectedDate, selectedBarber) {
+    if (!selectedDate) {
+      setSlots([]);
+      return;
+    }
+    const d = new Date(selectedDate);
+    if (d.getDay() === 0) {
+      setSlots([]);
+      return;
+    }
+    setLoadingSlots(true);
+    try {
+      if (
+        selectedBarber &&
+        selectedBarber !== "any" &&
+        GOOGLE_CALENDAR_CONFIG.API_KEY !== "SUA_API_KEY_AQUI"
+      ) {
+        const available = await googleCalendarService.getAvailableSlots(
+          selectedBarber,
+          selectedDate
+        );
+        setSlots(available);
+      } else if (selectedBarber && selectedBarber !== "any") {
+        setSlots(DateUtils.generateTimeSlots(d, selectedBarber));
+      } else {
+        // sem preferência: usar faixa padrão (09-18 ou sáb 08-18)
+        const base = d.getDay() === 6 ? ["08:00", "18:00"] : ["09:00", "18:00"];
+        const [start, end] = base;
+        const tmpCfg = {
+          BARBERS: {
+            any: {
+              workingHours: { [DateUtils.getDayName(d)]: { start, end } },
+            },
+          },
+          TIME_SLOTS: { interval: 30 },
+        };
+        const slotsTmp = [];
+        let cur = new Date(`2000-01-01T${start}`);
+        const endD = new Date(`2000-01-01T${end}`);
+        while (cur < endD) {
+          slotsTmp.push(cur.toTimeString().slice(0, 5));
+          cur.setMinutes(cur.getMinutes() + 30);
+        }
+        setSlots(slotsTmp);
+      }
+    } finally {
+      setLoadingSlots(false);
+    }
+  }
+
+  useEffect(() => {
+    refreshSlots(date, barber);
+  }, [date, barber]);
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    if (GOOGLE_CALENDAR_CONFIG.API_KEY === "SUA_API_KEY_AQUI") {
+      alert("Defina VITE_GOOGLE_API_KEY para criar agendamentos reais.");
+      return;
+    }
+    if (!date || !time || !service || barber === "any") {
+      alert("Preencha serviço, profissional, data e horário.");
+      return;
+    }
+    const canWeek = await googleCalendarService.canBookOnWeek(barber, date);
+    if (!canWeek) {
+      alert("Limite semanal atingido para este profissional.");
+      return;
+    }
+    const result = await googleCalendarService.createBooking({
+      name,
+      phone,
+      service,
+      date,
+      time,
+      barber,
+    });
+    if (result.success) {
+      alert("Agendamento criado com sucesso!");
+    } else {
+      alert(`Falha: ${result.error}`);
+    }
+  }
+
+  return (
+    <section id="schedule" className="schedule">
+      <div className="container">
+        <h2 className="section-title">Agende Seu Horário</h2>
+        <div className="schedule-content">
+          <div className="barbers">
+            <h3>Escolha seu Barbeiro</h3>
+            <div className="barbers-grid">
+              {Object.entries(GOOGLE_CALENDAR_CONFIG.BARBERS).map(([id, b]) => (
+                <div
+                  key={id}
+                  className={
+                    barber === id ? "barber-card selected" : "barber-card"
+                  }
+                  onClick={() => {
+                    setBarber(id);
+                  }}
+                >
+                  <img
+                    src={
+                      b.photoUrl ||
+                      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200"
+                    }
+                    alt={b.name}
+                  />
+                  <h4>{b.name}</h4>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="booking-form">
+            <h3>Formulário de Agendamento</h3>
+            <div
+              id="calendarSection"
+              className="calendar-section"
+              aria-live="polite"
+            >
+              <div className="calendar-header">
+                <button
+                  id="prevMonthBtn"
+                  className="calendar-nav"
+                  aria-label="Mês anterior"
+                  onClick={() =>
+                    setCalendarMonth((m) => {
+                      if (m === 0) {
+                        setCalendarYear((y) => y - 1);
+                        return 11;
+                      }
+                      return m - 1;
+                    })
+                  }
+                >
+                  &#9664;
+                </button>
+                <div id="calendarTitle" className="calendar-title">
+                  {computedTitle}
+                </div>
+                <button
+                  id="nextMonthBtn"
+                  className="calendar-nav"
+                  aria-label="Próximo mês"
+                  onClick={() =>
+                    setCalendarMonth((m) => {
+                      if (m === 11) {
+                        setCalendarYear((y) => y + 1);
+                        return 0;
+                      }
+                      return m + 1;
+                    })
+                  }
+                >
+                  &#9654;
+                </button>
+              </div>
+              <div className="calendar-legend">
+                <span>
+                  <span className="legend-box available"></span> Disponível
+                </span>
+                <span>
+                  <span className="legend-box unavailable"></span> Indisponível
+                </span>
+              </div>
+              <div className="calendar-grid" id="calendarGrid">
+                {["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"].map((wd) => (
+                  <div className="calendar-weekday" key={wd}>
+                    {wd}
+                  </div>
+                ))}
+                {(() => {
+                  const firstDay = new Date(calendarYear, calendarMonth, 1);
+                  const startWeekday = firstDay.getDay();
+                  const daysInMonth = new Date(
+                    calendarYear,
+                    calendarMonth + 1,
+                    0
+                  ).getDate();
+                  const today = new Date();
+                  const todayStr = today.toISOString().split("T")[0];
+                  const cells = [];
+                  for (let i = 0; i < startWeekday; i++) {
+                    cells.push(
+                      <div
+                        key={`empty-${i}`}
+                        className="calendar-day disabled"
+                      ></div>
+                    );
+                  }
+                  for (let day = 1; day <= daysInMonth; day++) {
+                    const cellDate = new Date(calendarYear, calendarMonth, day);
+                    const dateStr = DateUtils.toISODate(cellDate);
+                    const isSunday = cellDate.getDay() === 0;
+                    const isPast =
+                      cellDate <
+                      new Date(
+                        today.getFullYear(),
+                        today.getMonth(),
+                        today.getDate()
+                      );
+                    const isToday = dateStr === todayStr;
+                    const available = !isPast && !isSunday;
+                    cells.push(
+                      <div
+                        key={`d-${day}`}
+                        className={`calendar-day ${
+                          available ? "available" : "unavailable"
+                        } ${isToday ? "today" : ""} ${
+                          available ? "" : "disabled"
+                        }`}
+                        onClick={async () => {
+                          if (!available) return;
+                          setDate(dateStr);
+                        }}
+                      >
+                        <span>{day}</span>
+                      </div>
+                    );
+                  }
+                  return cells;
+                })()}
+              </div>
+            </div>
+
+            <form onSubmit={handleSubmit} id="bookingForm">
+              <div className="form-group">
+                <label htmlFor="service">Serviço</label>
+                <select
+                  id="service"
+                  name="service"
+                  required
+                  value={service}
+                  onChange={(e) => setService(e.target.value)}
+                >
+                  <option value="">Selecione um serviço</option>
+                  <option value="corte">Corte - 35,00€</option>
+                  <option value="barba">Barba - 25,00€</option>
+                  <option value="corte-barba">Corte + Barba - 50,00 €</option>
+                  <option value="coloracao">Coloração - 40,00€</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label htmlFor="barberPreference">Profissional</label>
+                <select
+                  id="barberPreference"
+                  name="barberPreference"
+                  required
+                  value={barber}
+                  onChange={(e) => setBarber(e.target.value)}
+                >
+                  <option value="any">Sem preferência</option>
+                  {Object.entries(GOOGLE_CALENDAR_CONFIG.BARBERS).map(
+                    ([id, b]) => (
+                      <option key={id} value={id}>
+                        {b.name}
+                      </option>
+                    )
+                  )}
+                </select>
+              </div>
+              <div className="form-group">
+                <label htmlFor="date">Data</label>
+                <input
+                  type="date"
+                  id="date"
+                  name="date"
+                  required
+                  value={date}
+                  onChange={(e) => setDate(e.target.value)}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="time">Horário</label>
+                <select
+                  id="time"
+                  name="time"
+                  required
+                  value={time}
+                  onChange={(e) => setTime(e.target.value)}
+                >
+                  <option value="">
+                    {loadingSlots
+                      ? "Carregando horários..."
+                      : "Selecione um horário"}
+                  </option>
+                  {!loadingSlots &&
+                    slots.map((t) => (
+                      <option key={t} value={t}>
+                        {t}
+                      </option>
+                    ))}
+                </select>
+              </div>
+              {showCustomer && (
+                <div id="customerInfo" className="customer-info">
+                  <div className="form-group">
+                    <label htmlFor="name">Nome Completo</label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      required
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="phone">Contacto</label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      required
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                    />
+                  </div>
+                </div>
+              )}
+              <div
+                id="confirmationPanel"
+                className="confirmation-panel"
+                aria-live="polite"
+              >
+                <h4>Confirme seus dados</h4>
+                <ul>
+                  <li>
+                    <strong>Barbeiro:</strong>{" "}
+                    <span id="confBarber">
+                      {GOOGLE_CALENDAR_CONFIG.BARBERS[barber]?.name ||
+                        (barber === "any" ? "Sem preferência" : "-")}
+                    </span>
+                  </li>
+                  <li>
+                    <strong>Serviço:</strong>{" "}
+                    <span id="confService">{service || "-"}</span>
+                  </li>
+                  <li>
+                    <strong>Data:</strong>{" "}
+                    <span id="confDate">{date || "-"}</span>
+                  </li>
+                  <li>
+                    <strong>Horário:</strong>{" "}
+                    <span id="confTime">{time || "-"}</span>
+                  </li>
+                  <li>
+                    <strong>Nome:</strong>{" "}
+                    <span id="confName">{name || "-"}</span>
+                  </li>
+                  <li>
+                    <strong>Contacto:</strong>{" "}
+                    <span id="confPhone">{phone || "-"}</span>
+                  </li>
+                </ul>
+              </div>
+              <button type="submit" className="submit-btn">
+                Confirmar Agendamento
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
