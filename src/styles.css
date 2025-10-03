@@ -326,6 +326,14 @@ main {
 .contact-item i {
   margin-top: 0; /* remove offset to vertically center */
 }
+.contact-item a {
+  text-decoration: none;
+  color: var(--light-text);
+}
+
+.contact-item a:hover {
+  color: var(--accent-color);
+}
 
 .gallery {
   padding: 80px 0;

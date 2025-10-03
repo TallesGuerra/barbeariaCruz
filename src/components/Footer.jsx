@@ -7,7 +7,7 @@ export default function Footer() {
             <h3>Barbearia Cruz</h3>
             <p>Estilo e qualidade para o homem moderno desde 2020.</p>
           </div>
-          <div className="footer-section">
+          {/*  <div className="footer-section">
             <h4>Links Rápidos</h4>
             <ul>
               <li><a href="#home">Início</a></li>
@@ -15,13 +15,23 @@ export default function Footer() {
               <li><a href="#prices">Preços</a></li>
               <li><a href="#schedule">Agendar</a></li>
             </ul>
-          </div>
+          </div> */}
           <div className="footer-section">
             <h4>Redes Sociais</h4>
             <div className="social-links">
-              <a href="https://www.instagram.com/barbeariacruz_official/" target="_blank" rel="noreferrer"><i className="fab fa-instagram"></i></a>
-              <a href="#"><i className="fab fa-facebook"></i></a>
-              <a href="#"><i className="fab fa-whatsapp"></i></a>
+              <a
+                href="https://www.instagram.com/barbeariacruz_official/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <i className="fab fa-instagram"></i>
+              </a>
+              <a href="#">
+                <i className="fab fa-facebook"></i>
+              </a>
+              <a href="#">
+                <i className="fab fa-whatsapp"></i>
+              </a>
             </div>
           </div>
         </div>
@@ -30,8 +40,5 @@ export default function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }
-
-
-
