@@ -5,7 +5,9 @@ export default function Footer() {
         <div className="footer-content">
           <div className="footer-section">
             <h3>Barbearia Cruz</h3>
-            <p>Estilo e qualidade para o homem moderno desde 2020.</p>
+            <p style={{ fontSize: 12 }}>
+              Estilo e qualidade para o homem moderno desde 2020.
+            </p>
           </div>
           {/*  <div className="footer-section">
             <h4>Links Rápidos</h4>
@@ -17,7 +19,7 @@ export default function Footer() {
             </ul>
           </div> */}
           <div className="footer-section">
-            <h4>Redes Sociais</h4>
+            {/* <h4></h4> */}
             <div className="social-links">
               <a
                 href="https://www.instagram.com/barbeariacruz_official/"
@@ -26,8 +28,8 @@ export default function Footer() {
               >
                 <i className="fab fa-instagram"></i>
               </a>
-              <a href="#">
-                <i className="fab fa-facebook"></i>
+              <a href="tel:+351 938 914 016" target="_blank">
+                <i className="fas fa-phone"></i>
               </a>
               <a href="#">
                 <i className="fab fa-whatsapp"></i>
@@ -36,7 +38,13 @@ export default function Footer() {
           </div>
         </div>
         <div className="footer-bottom">
-          <p>&copy; 2024 Barbearia Cruz. Todos os direitos reservados.</p>
+          <p>
+            &copy; Desenvolvido por{" "}
+            <a href="https://www.linkedin.com/in/talles-guerra/">
+              Talles Guerra
+            </a>
+            . Todos os direitos reservados.
+          </p>
         </div>
       </div>
     </footer>
