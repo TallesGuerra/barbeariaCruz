@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import { GOOGLE_CALENDAR_CONFIG, DateUtils } from "../config/calendarConfig";
 import { googleCalendarService } from "../services/googleCalendarService";
 
@@ -33,6 +33,8 @@ export default function Schedule() {
   const [showCustomer, setShowCustomer] = useState(false);
   const [slots, setSlots] = useState([]);
   const [loadingSlots, setLoadingSlots] = useState(false);
+  const [selectedDay, setSelectedDay] = useState("");
+  const calendarRef = useRef(null);
 
   useEffect(() => {
     setShowCustomer(Boolean(date && time));
@@ -130,6 +132,16 @@ export default function Schedule() {
     }
   }
 
+  function handleBarberClick(barberId) {
+    setBarber(barberId);
+    if (calendarRef.current) {
+      calendarRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+  }
+
   return (
     <section id="schedule" className="schedule">
       <div className="container">
@@ -144,9 +156,7 @@ export default function Schedule() {
                   className={
                     barber === id ? "barber-card selected" : "barber-card"
                   }
-                  onClick={() => {
-                    setBarber(id);
-                  }}
+                  onClick={() => handleBarberClick(id)}
                 >
                   <img
                     src={
@@ -167,6 +177,7 @@ export default function Schedule() {
               id="calendarSection"
               className="calendar-section"
               aria-live="polite"
+              ref={calendarRef}
             >
               <div className="calendar-header">
                 <button
@@ -251,6 +262,7 @@ export default function Schedule() {
                       );
                     const isToday = dateStr === todayStr;
                     const available = !isPast && !isSunday;
+                    const isSelected = selectedDay === dateStr;
                     cells.push(
                       <div
                         key={`d-${day}`}
@@ -258,10 +270,11 @@ export default function Schedule() {
                           available ? "available" : "unavailable"
                         } ${isToday ? "today" : ""} ${
                           available ? "" : "disabled"
-                        }`}
+                        } ${isSelected ? "selected" : ""}`}
                         onClick={async () => {
                           if (!available) return;
                           setDate(dateStr);
+                          setSelectedDay(dateStr); //
                         }}
                       >
                         <span>{day}</span>

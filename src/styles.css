@@ -561,6 +561,13 @@ main {
   transform: translateY(-2px);
   box-shadow: var(--shadow);
 }
+
+.calendar-day.selected {
+  border: 2px solid var(--accent-color);
+  box-shadow: 0 0 0 2px var(--secondary-color);
+  border-radius: 8px;
+  z-index: 2;
+}
 .calendar-weekday {
   font-size: 0.8rem;
   color: #888;
@@ -656,6 +663,9 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
+
+  line-height: 0.5rem;
 }
 
 .footer-section h3,
@@ -663,20 +673,7 @@ main {
   color: var(--secondary-color);
   margin-bottom: 1rem;
 }
-.footer-section ul {
-  list-style: none;
-}
-.footer-section ul li {
-  margin-bottom: 0.5rem;
-}
-.footer-section ul li a {
-  color: var(--light-text);
-  text-decoration: none;
-  transition: var(--transition);
-}
-.footer-section ul li a:hover {
-  color: var(--secondary-color);
-}
+
 .social-links {
   display: flex;
   gap: 1rem;
@@ -702,6 +699,10 @@ main {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+.footer-bottom a {
+  color: var(--secondary-color);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .nav-menu {
@@ -716,6 +717,7 @@ main {
     box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
     padding: 2rem 0;
   }
+
   .nav-menu.active {
     left: 0;
   }
@@ -784,6 +786,7 @@ main {
     min-height: 50px;
     font-size: 0.8rem;
   }
+
   .calendar-weekday {
     padding: 6px 2px;
     font-size: 0.7rem;
@@ -799,6 +802,14 @@ main {
   .submit-btn {
     padding: 10px 12px;
     font-size: 0.9rem;
+  }
+
+  .footer-section {
+    margin-top: 0.5rem;
+  }
+
+  .footer-bottom {
+    font-size: 70%;
   }
 }
 
