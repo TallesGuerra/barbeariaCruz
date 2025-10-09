@@ -2,6 +2,8 @@ import { useEffect, useMemo, useState, useRef } from "react";
 import { GOOGLE_CALENDAR_CONFIG, DateUtils } from "../config/calendarConfig";
 import { googleCalendarService } from "../services/googleCalendarService";
 
+import { SERVICES } from "../config/servicePrices";
+
 const timeSlots = [
   "09:00",
   "09:30",
@@ -35,6 +37,7 @@ export default function Schedule() {
   const [loadingSlots, setLoadingSlots] = useState(false);
   const [selectedDay, setSelectedDay] = useState("");
   const calendarRef = useRef(null);
+  const formRef = useRef(null); // Ref para o formulário
 
   useEffect(() => {
     setShowCustomer(Boolean(date && time));
@@ -142,6 +145,18 @@ export default function Schedule() {
     }
   }
 
+  function handleDayClick(dateStr, available) {
+    if (!available) return;
+    setDate(dateStr);
+    setSelectedDay(dateStr);
+    if (formRef.current) {
+      formRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+  }
+
   return (
     <section id="schedule" className="schedule">
       <div className="container">
@@ -171,7 +186,7 @@ export default function Schedule() {
             </div>
           </div>
 
-          <div className="booking-form">
+          <div className="booking-form" ref={formRef}>
             <h3>Formulário de Agendamento</h3>
             <div
               id="calendarSection"
@@ -271,11 +286,7 @@ export default function Schedule() {
                         } ${isToday ? "today" : ""} ${
                           available ? "" : "disabled"
                         } ${isSelected ? "selected" : ""}`}
-                        onClick={async () => {
-                          if (!available) return;
-                          setDate(dateStr);
-                          setSelectedDay(dateStr); //
-                        }}
+                        onClick={() => handleDayClick(dateStr, available)}
                       >
                         <span>{day}</span>
                       </div>
@@ -297,10 +308,11 @@ export default function Schedule() {
                   onChange={(e) => setService(e.target.value)}
                 >
                   <option value="">Selecione um serviço</option>
-                  <option value="corte">Corte - 35,00€</option>
-                  <option value="barba">Barba - 25,00€</option>
-                  <option value="corte-barba">Corte + Barba - 50,00 €</option>
-                  <option value="coloracao">Coloração - 40,00€</option>
+                  {SERVICES.map((s) => (
+                    <option key={s.id} value={s.id}>
+                      {s.name} - {s.price.toFixed(2)} €
+                    </option>
+                  ))}
                 </select>
               </div>
               <div className="form-group">
