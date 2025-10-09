@@ -15,15 +15,10 @@ export default function Hours() {
               <span>Fechado</span>
             </div>
           </div>
-          <div className="contact-info">
-            <p>
-              <i className="fas fa-phone"></i> +351 938 914 016
-            </p>
-            <p>
-              <i className="fas fa-map-marker-alt"></i>
-              Rua Cidade de Pinhel - 12, 2835-076 Baixa da Banheira
-            </p>
-          </div>
+
+          <a href="#schedule" className="cta-button">
+            Agendar Horário
+          </a>
         </div>
       </div>
     </section>

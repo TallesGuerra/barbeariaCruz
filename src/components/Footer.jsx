@@ -31,7 +31,7 @@ export default function Footer() {
               <a href="tel:+351 938 914 016" target="_blank">
                 <i className="fas fa-phone"></i>
               </a>
-              <a href="#">
+              <a href="https://wa.me/351938914016" target="_blank">
                 <i className="fab fa-whatsapp"></i>
               </a>
             </div>
