@@ -4,8 +4,8 @@ export const GOOGLE_CALENDAR_CONFIG = {
   BARBERS: {
     '1': {
       name: 'Rogério',
-      email: 'rogerio@barbeariacruz.com',
-      calendarId: 'rogerio@barbeariacruz.com',
+      email: 'barbearia2830@gmail.com',
+      calendarId: 'barbearia2830@gmail.com',
       photoUrl: '/src/assets/rogerioBarbeiro.jpg',
       quotas: { maxPerDay: 12, maxPerWeek: 50 },
       workingHours: {
@@ -20,8 +20,8 @@ export const GOOGLE_CALENDAR_CONFIG = {
     },
     '2': {
       name: 'Thiago Loureiro',
-      email: 'thiago.loureiro@barbeariacruz.com',
-      calendarId: 'thiago.loureiro@barbeariacruz.com',
+      email: 'barbearia2830@gmail.com',
+      calendarId: 'barbearia2830@gmail.com',
       photoUrl: '/src/assets/loureiroBarbeiro.png',
       quotas: { maxPerDay: 12, maxPerWeek: 50 },
       workingHours: {
@@ -36,8 +36,8 @@ export const GOOGLE_CALENDAR_CONFIG = {
     },
     '3': {
       name: 'Thiago',
-      email: 'thiago@barbeariacruz.com',
-      calendarId: 'thiago@barbeariacruz.com',
+      email: 'barbearia2830@gmail.com',
+      calendarId: 'barbearia2830@gmail.com',
       photoUrl: '/src/assets/thiagoBarbeiro.jpg',
       quotas: { maxPerDay: 12, maxPerWeek: 50 },
       workingHours: {
@@ -52,8 +52,8 @@ export const GOOGLE_CALENDAR_CONFIG = {
     },
     '4': {
       name: 'Gustavo',
-      email: 'gustavo@barbeariacruz.com',
-      calendarId: 'gustavo@barbeariacruz.com',
+      email: 'barbearia2830@gmail.com',
+      calendarId: 'barbearia2830@gmail.com',
       photoUrl: '/src/assets/gustavoBarbeiro.png',
       quotas: { maxPerDay: 10, maxPerWeek: 40 },
       workingHours: {
@@ -68,8 +68,8 @@ export const GOOGLE_CALENDAR_CONFIG = {
     },
     '5': {
       name: 'Isac',
-      email: 'isac@barbeariacruz.com',
-      calendarId: 'isac@barbeariacruz.com',
+      email: 'barbearia2830@gmail.com',
+      calendarId: 'barbearia2830@gmail.com',
       photoUrl: '/src/assets/isacBarbeiro.png',
       quotas: { maxPerDay: 8, maxPerWeek: 35 },
       workingHours: {

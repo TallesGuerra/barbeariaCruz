@@ -199,15 +199,14 @@ export default function Schedule() {
                   id="prevMonthBtn"
                   className="calendar-nav"
                   aria-label="Mês anterior"
-                  onClick={() =>
-                    setCalendarMonth((m) => {
-                      if (m === 0) {
-                        setCalendarYear((y) => y - 1);
-                        return 11;
-                      }
-                      return m - 1;
-                    })
-                  }
+                  onClick={() => {
+                    if (calendarMonth === 0) {
+                      setCalendarMonth(11);
+                      setCalendarYear((y) => y - 1);
+                    } else {
+                      setCalendarMonth((m) => m - 1);
+                    }
+                  }}
                 >
                   &#9664;
                 </button>
@@ -218,15 +217,14 @@ export default function Schedule() {
                   id="nextMonthBtn"
                   className="calendar-nav"
                   aria-label="Próximo mês"
-                  onClick={() =>
-                    setCalendarMonth((m) => {
-                      if (m === 11) {
-                        setCalendarYear((y) => y + 1);
-                        return 0;
-                      }
-                      return m + 1;
-                    })
-                  }
+                  onClick={() => {
+                    if (calendarMonth === 11) {
+                      setCalendarMonth(0);
+                      setCalendarYear((y) => y + 1);
+                    } else {
+                      setCalendarMonth((m) => m + 1);
+                    }
+                  }}
                 >
                   &#9654;
                 </button>
