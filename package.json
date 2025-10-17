@@ -7,10 +7,12 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
+    "start-backend": "node src/backend/server.js",
     "preview": "vite preview"
   },
   "dependencies": {
     "@google-cloud/local-auth": "^3.0.1",
+    "cors": "^2.8.5",
     "express": "^5.1.0",
     "googleapis": "^162.0.0",
     "react": "^19.1.1",

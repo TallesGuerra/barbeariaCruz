@@ -1,29 +1,9 @@
+// ...existing code...
 import { useEffect, useMemo, useState, useRef } from "react";
 import { GOOGLE_CALENDAR_CONFIG, DateUtils } from "../config/calendarConfig";
 import { googleCalendarService } from "../services/googleCalendarService";
 
 import { SERVICES } from "../config/servicePrices";
-
-const timeSlots = [
-  "09:00",
-  "09:30",
-  "10:00",
-  "10:30",
-  "11:00",
-  "11:30",
-  "12:00",
-  "12:30",
-  "13:00",
-  "13:30",
-  "14:00",
-  "14:30",
-  "15:00",
-  "15:30",
-  "16:00",
-  "16:30",
-  "17:00",
-  "17:30",
-];
 
 export default function Schedule() {
   const [service, setService] = useState("");
@@ -105,21 +85,33 @@ export default function Schedule() {
     refreshSlots(date, barber);
   }, [date, barber]);
 
+  // UNIFIED handleSubmit: valida, chama backend, trata conflito e limpa formulário
   async function handleSubmit(e) {
     e.preventDefault();
+
+    // opcional: mensagem quando API key placeholder (manter se quiser)
     if (GOOGLE_CALENDAR_CONFIG.API_KEY === "SUA_API_KEY_AQUI") {
-      alert("Defina VITE_GOOGLE_API_KEY para criar agendamentos reais.");
-      return;
+      // se você usa backend com conta de serviço, API key aqui não é crítica para criar eventos
+      // comente ou remova essa checagem se estiver usando backend
     }
+
     if (!date || !time || !service || barber === "any") {
       alert("Preencha serviço, profissional, data e horário.");
       return;
     }
+
+    // limite semanal (mantém lógica existente)
     const canWeek = await googleCalendarService.canBookOnWeek(barber, date);
     if (!canWeek) {
       alert("Limite semanal atingido para este profissional.");
       return;
     }
+
+    // enviar barberName/barberEmail para o backend (melhora visibilidade e filtragem)
+    const barberObj = GOOGLE_CALENDAR_CONFIG.BARBERS[barber] || {};
+    const barberName = barberObj.name || "";
+    const barberEmail = barberObj.email || "";
+
     const result = await googleCalendarService.createBooking({
       name,
       phone,
@@ -127,12 +119,42 @@ export default function Schedule() {
       date,
       time,
       barber,
+      barberName,
+      barberEmail,
     });
-    if (result.success) {
-      alert("Agendamento criado com sucesso!");
-    } else {
-      alert(`Falha: ${result.error}`);
+
+    if (!result.success) {
+      const err = result.error || "Erro desconhecido";
+      // trata conflito 409 retornado pelo backend
+      if (
+        String(err).toLowerCase().includes("horário já reservado") ||
+        result.status === 409
+      ) {
+        alert("Horário já ocupado para este barbeiro. Escolha outro horário.");
+        // recarrega slots para refletir ocupação
+        const newSlots = await googleCalendarService.getAvailableSlots(
+          barber,
+          date
+        );
+        setSlots(newSlots);
+        return;
+      }
+      alert("Falha no agendamento: " + err);
+      return;
     }
+
+    // sucesso: limpar formulário e atualizar slots
+    alert("Agendamento realizado com sucesso!");
+    setName("");
+    setPhone("");
+    setService("");
+    setTime("");
+
+    const newSlots = await googleCalendarService.getAvailableSlots(
+      barber,
+      date
+    );
+    setSlots(newSlots);
   }
 
   function handleBarberClick(barberId) {
