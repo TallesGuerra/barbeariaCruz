@@ -118,7 +118,7 @@ export class GoogleCalendarService {
       const barberName = barberObj.name || '';
       const barberEmail = barberObj.email || '';
 
-      const res = await fetch('http://localhost:3001/agendar', {
+      const res = await fetch('/api/agendar', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -148,7 +148,7 @@ export class GoogleCalendarService {
 
 export async function agendarServico({ name, service, date, time, phone, barber }) {
   try {
-    const response = await fetch('http://localhost:3001/agendar', {
+    const response = await fetch('/api/agendar', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, service, date, time, phone, barber })
