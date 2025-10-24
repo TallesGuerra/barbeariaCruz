@@ -3,7 +3,6 @@ README.md
 
 # Google service account keys / secrets
 service-account.json
-barbeariacruz-*.json
 *-key.json
 *.secret.json
 
