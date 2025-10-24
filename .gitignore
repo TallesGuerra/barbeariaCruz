@@ -1,6 +1,11 @@
 README.md
 .env
+
+# Google service account keys / secrets
 service-account.json
+barbeariacruz-*.json
+*-key.json
+*.secret.json
 
 
 
