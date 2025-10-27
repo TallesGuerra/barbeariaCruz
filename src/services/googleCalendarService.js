@@ -148,24 +148,29 @@ export class GoogleCalendarService {
 
 export async function agendarServico({ name, service, date, time, phone, barber }) {
   try {
-    const response = await fetch('/api/agendar', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, service, date, time, phone, barber })
-    });
+    const response = await fetch(
+      `${import.meta.env.VITE_API_URL || "https://barbearia-api.vercel.app"}/api/agendar`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, service, date, time, phone, barber }),
+      }
+    );
+
     const data = await response.json();
+
     if (data.success) {
-      alert('Agendamento realizado com sucesso!');
+      alert("✅ Agendamento realizado com sucesso!");
     } else {
-      alert('Erro ao agendar: ' + (data.error || 'Erro desconhecido'));
+      alert("❌ Erro ao agendar: " + (data.error || "Erro desconhecido"));
     }
+
     return data;
   } catch (err) {
-    alert('Erro de conexão com o servidor!');
+    alert("🚫 Erro de conexão com o servidor!");
     return { success: false, error: err.message };
   }
 }
-
 
 
 export const googleCalendarService = new GoogleCalendarService()
