@@ -27,7 +27,7 @@ export default function Header() {
             <img
               src="/assets/logoBarbearia.png"
               alt="Barbearia Cruz"
-              style={{ height: 200, borderRadius: 100 }}
+              style={{ height: 50, borderRadius: 100 }}
             />
             <h2>
               Barbearia <span>Cruz</span>
