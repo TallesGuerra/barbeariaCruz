@@ -118,7 +118,8 @@ export class GoogleCalendarService {
       const barberName = barberObj.name || '';
       const barberEmail = barberObj.email || '';
 
-      const res = await fetch('/api/agendar', {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL || "https://barbearia-api.vercel.app"}/api/agendar`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -128,8 +129,8 @@ export class GoogleCalendarService {
           date,
           time,
           barber,
-          barberName,    // agora enviamos o nome do barbeiro
-          barberEmail    // e o email (opcional) para attendees/filtros
+          barberName,
+          barberEmail
         })
       });
       const data = await res.json();
