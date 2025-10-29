@@ -113,12 +113,12 @@ export class GoogleCalendarService {
     try {
       console.log('🔄 Enviando agendamento para API...')
 
-      const apiUrl = import.meta.env.VITE_API_URL || "https://barbearia-api.vercel.app"
+      const apiUrl = import.meta.env.VITE_API_URL;
 
       const res = await fetch(`${apiUrl}/api/agendar`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
           name,
