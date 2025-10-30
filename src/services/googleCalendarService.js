@@ -113,7 +113,10 @@ export class GoogleCalendarService {
     try {
       console.log('🔄 Enviando agendamento para API...')
 
-      const apiUrl = import.meta.env.VITE_API_URL;
+      // CORRIGIDO: Adiciona fallback para a URL da API
+      const apiUrl = import.meta.env.VITE_API_URL || "https://barbearia-api.vercel.app"
+
+      console.log('🌐 URL da API:', apiUrl)
 
       const res = await fetch(`${apiUrl}/api/agendar`, {
         method: "POST",
