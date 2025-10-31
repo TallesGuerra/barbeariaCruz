@@ -113,12 +113,16 @@ export class GoogleCalendarService {
 
   async createBooking({ name, phone, service, date, time, barber }) {
     try {
-      // obter barberName/barberEmail do config para enviar ao backend
       const barberObj = GOOGLE_CALENDAR_CONFIG.BARBERS[barber] || {};
       const barberName = barberObj.name || '';
       const barberEmail = barberObj.email || '';
 
-      const res = await fetch('/api/agendar', {
+      const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3001"
+
+      console.log('🔧 API URL carregada:', apiUrl)
+      console.log('🔧 Todas env vars:', import.meta.env)
+
+      const res = await fetch(`${apiUrl}/agendar`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -128,8 +132,8 @@ export class GoogleCalendarService {
           date,
           time,
           barber,
-          barberName,    // agora enviamos o nome do barbeiro
-          barberEmail    // e o email (opcional) para attendees/filtros
+          barberName,
+          barberEmail
         })
       });
       const data = await res.json();
@@ -142,30 +146,6 @@ export class GoogleCalendarService {
     }
   }
 }
-
-
-
-
-export async function agendarServico({ name, service, date, time, phone, barber }) {
-  try {
-    const response = await fetch('/api/agendar', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, service, date, time, phone, barber })
-    });
-    const data = await response.json();
-    if (data.success) {
-      alert('Agendamento realizado com sucesso!');
-    } else {
-      alert('Erro ao agendar: ' + (data.error || 'Erro desconhecido'));
-    }
-    return data;
-  } catch (err) {
-    alert('Erro de conexão com o servidor!');
-    return { success: false, error: err.message };
-  }
-}
-
 
 
 export const googleCalendarService = new GoogleCalendarService()
