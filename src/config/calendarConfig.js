@@ -6,7 +6,7 @@ export const GOOGLE_CALENDAR_CONFIG = {
       name: 'Rogério',
       email: 'barbearia2830@gmail.com',
       calendarId: 'barbearia2830@gmail.com',
-      photoUrl: '/src/assets/rogerioBarbeiro.jpg',
+      photoUrl: '/assets/rogerioBarbeiro.jpg',
       quotas: { maxPerDay: 12, maxPerWeek: 50 },
       workingHours: {
         monday: { start: '09:00', end: '19:00' },
@@ -22,7 +22,7 @@ export const GOOGLE_CALENDAR_CONFIG = {
       name: 'Thiago Loureiro',
       email: 'barbearia2830@gmail.com',
       calendarId: 'barbearia2830@gmail.com',
-      photoUrl: '/src/assets/loureiroBarbeiro.png',
+      photoUrl: '/assets/loureiroBarbeiro.png',
       quotas: { maxPerDay: 12, maxPerWeek: 50 },
       workingHours: {
         monday: { start: '09:00', end: '19:00' },
@@ -38,7 +38,7 @@ export const GOOGLE_CALENDAR_CONFIG = {
       name: 'Thiago',
       email: 'barbearia2830@gmail.com',
       calendarId: 'barbearia2830@gmail.com',
-      photoUrl: '/src/assets/thiagoBarbeiro.jpg',
+      photoUrl: '/assets/thiagoBarbeiro.jpg',
       quotas: { maxPerDay: 12, maxPerWeek: 50 },
       workingHours: {
         monday: { start: '09:00', end: '19:00' },
@@ -54,7 +54,7 @@ export const GOOGLE_CALENDAR_CONFIG = {
       name: 'Gustavo',
       email: 'barbearia2830@gmail.com',
       calendarId: 'barbearia2830@gmail.com',
-      photoUrl: '/src/assets/gustavoBarbeiro.png',
+      photoUrl: '/assets/gustavoBarbeiro.png',
       quotas: { maxPerDay: 10, maxPerWeek: 40 },
       workingHours: {
         monday: { start: '09:00', end: '19:00' },
@@ -70,7 +70,7 @@ export const GOOGLE_CALENDAR_CONFIG = {
       name: 'Isac',
       email: 'barbearia2830@gmail.com',
       calendarId: 'barbearia2830@gmail.com',
-      photoUrl: '/src/assets/isacBarbeiro.png',
+      photoUrl: '/assets/isacBarbeiro.png',
       quotas: { maxPerDay: 8, maxPerWeek: 35 },
       workingHours: {
         monday: { start: '09:00', end: '19:00' },
