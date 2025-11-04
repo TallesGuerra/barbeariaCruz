@@ -1,5 +1,4 @@
 import { useState } from "react";
-import logoImg from "../assets/logoBarbearia.png";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -26,7 +25,7 @@ export default function Header() {
             style={{ display: "flex", alignItems: "center", gap: "10px" }}
           >
             <img
-              src={logoImg}
+              src="/assets/logoBarbearia.png"
               alt="Barbearia Cruz"
               style={{ height: 50, borderRadius: 100 }}
             />

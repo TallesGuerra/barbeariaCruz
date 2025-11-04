@@ -1,11 +1,9 @@
-import logoImg from "../assets/logoBarbearia.png";
-
 export default function Hero() {
   return (
     <section id="home" className="hero">
       <div className="hero-content">
         <img
-          src={logoImg}
+          src="/assets/logoBarbearia.png"
           alt="Barbearia Cruz"
           style={{ height: 200, borderRadius: 100 }}
         />
