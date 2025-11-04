@@ -461,6 +461,12 @@ main {
   border-color: var(--secondary-color);
   box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
 }
+
+.form-group input[type="date"] {
+  text-align: left;
+  padding-left: 1rem;
+}
+
 .submit-btn {
   width: 100%;
   padding: 12px 15px;
@@ -588,21 +594,30 @@ main {
   border-radius: 12px;
   padding: 1rem;
   margin-top: 1rem;
+
+  text-align: left;
   font-size: 0.9rem;
 }
 .confirmation-panel h4 {
   margin-bottom: 0.5rem;
-  text-align: center;
+  text-align: left;
   font-size: 1.1rem;
 }
 .confirmation-panel ul {
   list-style: none;
   padding-left: 0;
+  margin: 0;
+  text-align: left;
 }
 .confirmation-panel li {
-  margin: 4px 0;
+  margin: 0.5rem 0;
   padding: 2px 0;
   border-bottom: 1px solid #eee;
+
+  text-align: left;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.3rem;
 }
 
 .contact {
@@ -806,6 +821,19 @@ main {
     padding: 8px 10px;
     font-size: 0.85rem;
   }
+
+  .form-group input[type="date"] {
+    text-align: left;
+    padding-left: 0.75rem;
+  }
+
+  .confirmation-panel,
+  .confirmation-panel h4,
+  .confirmation-panel ul,
+  .confirmation-panel li {
+    text-align: left !important;
+  }
+
   .submit-btn {
     padding: 10px 12px;
     font-size: 0.9rem;
