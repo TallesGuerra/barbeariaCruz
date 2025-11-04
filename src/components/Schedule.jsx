@@ -288,6 +288,7 @@ export default function Schedule() {
                     const cellDate = new Date(calendarYear, calendarMonth, day);
                     const dateStr = DateUtils.toISODate(cellDate);
                     const isSunday = cellDate.getDay() === 0;
+                    const isMonday = cellDate.getDay() === 1;
                     const isPast =
                       cellDate <
                       new Date(
@@ -296,7 +297,7 @@ export default function Schedule() {
                         today.getDate()
                       );
                     const isToday = dateStr === todayStr;
-                    const available = !isPast && !isSunday;
+                    const available = !isPast && !isSunday && !isMonday;
                     const isSelected = selectedDay === dateStr;
                     cells.push(
                       <div

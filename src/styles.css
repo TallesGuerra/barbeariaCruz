@@ -37,6 +37,7 @@ body {
 
 /* Header and Navigation */
 .header {
+  height: auto;
   position: fixed;
   top: 0;
   width: 100%;
@@ -46,7 +47,7 @@ body {
   transition: var(--transition);
 }
 .navbar {
-  padding: 1rem 0;
+  padding: 2rem 0;
 }
 .nav-container {
   display: flex;
@@ -58,7 +59,7 @@ body {
 }
 .logo h2 {
   color: var(--light-text);
-  font-size: 1.8rem;
+  font-size: 1rem;
   font-weight: 700;
 }
 .logo span {
@@ -462,11 +463,15 @@ main {
 }
 .submit-btn {
   width: 100%;
+  padding: 12px 15px;
+  margin-top: 1.5rem;
+
   background: var(--secondary-color);
   color: var(--primary-color);
-  padding: 12px 15px;
+
   border: none;
   border-radius: 8px;
+
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
@@ -702,12 +707,17 @@ main {
 
 /* Responsive */
 @media (max-width: 768px) {
+  .navbar {
+    padding: 0.5rem 0;
+  }
+
   .nav-menu {
     position: fixed;
     left: -100%;
-    top: 70px;
+    top: 100px;
     flex-direction: column;
     background-color: var(--primary-color);
+    height: calc(100vh - 56px);
     width: 100%;
     text-align: center;
     transition: 0.3s;
