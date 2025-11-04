@@ -2,7 +2,6 @@ export default function Gallery() {
   return (
     <section id="gallery" className="gallery">
       <div className="container">
-        <h2 className="section-title">Galeria de Trabalhos</h2>
         <div className="gallery-grid">
           {[
             "photo-1503951914875-452162b0f3f1",
