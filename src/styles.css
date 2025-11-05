@@ -723,16 +723,16 @@ main {
 /* Responsive */
 @media (max-width: 768px) {
   .navbar {
-    padding: 0.5rem 0;
+    padding: 1rem 0;
   }
 
   .nav-menu {
     position: fixed;
     left: -100%;
-    top: 100px;
+    top: 48px;
     flex-direction: column;
     background-color: var(--primary-color);
-    height: calc(100vh - 56px);
+    height: calc(100vh - 48px);
     width: 100%;
     text-align: center;
     transition: 0.3s;
