@@ -370,11 +370,13 @@ main {
   background: var(--light-text);
 }
 .schedule-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 3rem;
-  align-items: start;
-  justify-content: center;
+  align-items: center;
+}
+.schedule-content .barbers {
+  width: 100%;
 }
 .barbers h3 {
   font-size: 1.8rem;
@@ -384,7 +386,7 @@ main {
 }
 .barbers-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem;
 }
 .barber-card {
@@ -695,18 +697,21 @@ main {
   display: flex;
   gap: 1rem;
 }
-.social-links a {
-  display: inline-block;
+.social-links a,
+.social-links i {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 40px;
   height: 40px;
   background: var(--secondary-color);
   color: var(--primary-color);
-  text-align: center;
-  line-height: 40px;
   border-radius: 50%;
+  font-size: 1rem;
   transition: var(--transition);
 }
-.social-links a:hover {
+.social-links a:hover,
+.social-links i:hover {
   background: var(--accent-color);
   transform: translateY(-3px);
 }
@@ -792,7 +797,7 @@ main {
     padding: 0 1rem;
   }
   .barbers-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
     padding: 0 1rem;
   }
   .booking-form {
