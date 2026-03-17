@@ -26,11 +26,11 @@ export default function Header() {
           >
             <img
               src="/assets/logoBarbearia.png"
-              alt="Barbearia Cruz"
+              alt="Barber Shop"
               style={{ height: 50, borderRadius: 100 }}
             />
             <h2>
-              Barbearia <span>Cruz</span>
+              Barber <span>Shop</span>
             </h2>
           </div>
           <ul className={menuOpen ? "nav-menu active" : "nav-menu"}>

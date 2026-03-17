@@ -4,7 +4,7 @@ export default function Footer() {
       <div className="container">
         <div className="footer-content">
           <div className="footer-section">
-            <h3>Barbearia Cruz</h3>
+            <h3>Barber Shop</h3>
             <p style={{ fontSize: 12 }}>
               Estilo e qualidade para o homem moderno desde 2020.
             </p>
