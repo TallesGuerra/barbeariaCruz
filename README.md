@@ -4,6 +4,8 @@ Website de agendamento para barbearia, desenvolvido com React + Vite. Permite qu
 
 **Demo:** [barbearia-cruz.vercel.app](https://barbearia-cruz.vercel.app)
 
+![Screenshot](public/assets/screenshot.png)
+
 ---
 
 ## Funcionalidades
