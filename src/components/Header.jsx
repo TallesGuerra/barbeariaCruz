@@ -54,24 +54,6 @@ export default function Header() {
             </li>
             <li>
               <a
-                href="#prices"
-                className="nav-link"
-                onClick={(e) => handleAnchorClick(e, "#prices")}
-              >
-                Preços
-              </a>
-            </li>
-            <li>
-              <a
-                href="#gallery"
-                className="nav-link"
-                onClick={(e) => handleAnchorClick(e, "#gallery")}
-              >
-                Galeria
-              </a>
-            </li>
-            <li>
-              <a
                 href="#schedule"
                 className="nav-link"
                 onClick={(e) => handleAnchorClick(e, "#schedule")}

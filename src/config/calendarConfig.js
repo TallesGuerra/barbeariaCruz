@@ -18,22 +18,6 @@ export const GOOGLE_CALENDAR_CONFIG = {
         sunday: { start: null, end: null }
       }
     },
-    '2': {
-      name: 'Thiago Loureiro',
-      email: 'barbearia2830@gmail.com',
-      calendarId: 'barbearia2830@gmail.com',
-      photoUrl: '/assets/loureiroBarbeiro.png',
-      quotas: { maxPerDay: 12, maxPerWeek: 50 },
-      workingHours: {
-        monday: { start: '09:00', end: '19:00' },
-        tuesday: { start: '09:00', end: '19:00' },
-        wednesday: { start: '09:00', end: '19:00' },
-        thursday: { start: '09:00', end: '19:00' },
-        friday: { start: '09:00', end: '19:00' },
-        saturday: { start: '08:00', end: '18:00' },
-        sunday: { start: null, end: null }
-      }
-    },
     '3': {
       name: 'Thiago',
       email: 'barbearia2830@gmail.com',

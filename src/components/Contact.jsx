@@ -18,23 +18,11 @@ export default function Contact() {
             </div>
             <div className="contact-item">
               <i className="fas fa-phone"></i>
-              <div>
-                <a href="tel:+351 938 914 016" target="_blank">
-                  +351 938 914 016
-                </a>
-              </div>
+              <div>+351 912 345 678</div>
             </div>
             <div className="contact-item">
               <i className="fab fa-instagram"></i>
-              <div>
-                <a
-                  href="https://www.instagram.com/barbeariacruz_official/"
-                  target="_blank"
-                >
-                  {" "}
-                  barbeariacruz_official
-                </a>
-              </div>
+              <div>@barbershop.official</div>
             </div>
           </div>
           <div className="map">
