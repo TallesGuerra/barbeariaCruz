@@ -423,13 +423,36 @@ main {
 
 .booking-form {
   background: var(--gray-light);
-  padding: 2rem;
+  padding: 2rem 3rem;
   border-radius: 15px;
   box-shadow: var(--shadow);
-  max-width: 500px;
-  margin: 0 auto;
-
+  width: 100%;
   border: solid 1px var(--accent-color);
+}
+
+.booking-form form {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0 2rem;
+}
+
+.booking-form form .form-group {
+  grid-column: span 1;
+}
+
+.booking-form form .customer-info {
+  grid-column: span 3;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0 2rem;
+}
+
+.booking-form form .confirmation-panel {
+  grid-column: span 3;
+}
+
+.booking-form form .submit-btn {
+  grid-column: span 3;
 }
 .booking-form h3 {
   font-size: 1.8rem;
@@ -801,8 +824,19 @@ main {
     padding: 0 1rem;
   }
   .booking-form {
-    /* margin: 0 1rem; */
     padding: 1.5rem;
+  }
+  .booking-form form {
+    grid-template-columns: 1fr;
+  }
+  .booking-form form .form-group,
+  .booking-form form .customer-info,
+  .booking-form form .confirmation-panel,
+  .booking-form form .submit-btn {
+    grid-column: span 1;
+  }
+  .booking-form form .customer-info {
+    grid-template-columns: 1fr;
   }
   .calendar-section {
     padding: 0.75rem;
